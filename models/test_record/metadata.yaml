@@ -1,0 +1,32 @@
+# Definition of metadata for test_record. Please do not add ccmm model here,
+# add the ccmm_preset instead.
+Metadata:
+  files: true
+  properties:
+    title:
+      type: fulltext+keyword
+      required: true
+    description:
+      type: fulltext+keyword
+      required: false
+      label:
+        en: Description
+    vocab_item:
+      type: vocabulary
+      vocabulary-type: hierarchical-vocab
+      required: false
+      label:
+        en: Vocabulary item
+    parent_test_record:
+      type: pid-relation
+      required: false
+      keys:
+        - id
+        - metadata.title
+        - metadata.vocab_item
+      record_cls: "test_record:TestRecordRecord"
+    languages:
+      type: array
+      items:
+        type: vocabulary
+        vocabulary-type: languages

@@ -1,0 +1,44 @@
+test_id,req_id,title,test_type,environment,automation,priority,status,block_ref,notes
+PLT-021-a,PLTREQ-021,Install from official release packages,smoke,cold,manual,MUST,designed,,Only cold test; FAIL signals patched env needed for all others
+PLT-001-a,PLTREQ-001,REST deposit returns 201,api,patched,curl,MUST,designed,,Depends on PLTREQ-021 patch
+PLT-001-b,PLTREQ-001,Draft record content retrievable via GET,api,patched,curl,MUST,designed,,Requires PLT-001-a; verifies GET /api/records/<id>/draft returns deposited content
+PLT-002-a,PLTREQ-002,DataCite DOI assigned on publish,api,patched,pytest,MUST,blocked,#plt-002-a,Requires DataCite sandbox credentials
+PLT-003-a,PLTREQ-003,ePIC handle assigned to sub-record,integration,patched,manual,MUST,blocked,#plt-003-a,Upstream not yet implemented
+PLT-004-a,PLTREQ-004,Anonymous user blocked from restricted files,smoke,patched,pytest,MUST,designed,,
+PLT-004-b,PLTREQ-004,Authorized user accesses restricted files,smoke,patched,pytest,MUST,designed,,
+PLT-004-c,PLTREQ-004,Embargoed record: metadata visible files blocked,smoke,patched,pytest,MUST,designed,,
+PLT-005-a,PLTREQ-005,AAI federated login flow completes,integration,patched,manual,MUST,designed,,Requires external eduGAIN/ORCID IdP
+PLT-005-b,PLTREQ-005,Community role permissions enforced,smoke,patched,pytest,MUST,designed,,owner/curator/reader role matrix
+PLT-006-a,PLTREQ-006,DataCite XML export endpoint returns 200,api,patched,curl,MUST,designed,,Accept: application/vnd.datacite.datacite+xml
+PLT-006-b,PLTREQ-006,Dublin Core export endpoint returns 200,api,patched,curl,MUST,designed,,
+PLT-006-c,PLTREQ-006,JSON-LD export endpoint returns 200,api,patched,curl,MUST,designed,,
+PLT-007-a,PLTREQ-007,Full-text search returns matching records,integration,patched,pytest,MUST,designed,,
+PLT-007-b,PLTREQ-007,Field filter narrows search results,integration,patched,pytest,MUST,designed,,
+PLT-008-a,PLTREQ-008,Record landing page loads with metadata,ui,patched,manual,SHOULD,designed,,
+PLT-008-b,PLTREQ-008,File preview renders for common format,ui,patched,manual,SHOULD,designed,,PDF or CSV test file
+PLT-009-a,PLTREQ-009,Content negotiation returns JSON,api,patched,curl,MUST,designed,,Accept: application/json
+PLT-009-b,PLTREQ-009,Content negotiation returns DataCite XML,api,patched,curl,MUST,designed,,Tests /records/ route not /api/records/
+PLT-010-a,PLTREQ-010,Withdrawn record returns tombstone response,api,patched,curl,MUST,designed,,Expect 410 Gone
+PLT-010-b,PLTREQ-010,DOI resolves after record withdrawal,integration,patched,manual,MUST,blocked,#plt-010-b,Requires DataCite sandbox; depends on PLT-002-a
+PLT-011-a,PLTREQ-011,View count increments on record access,api,patched,pytest,COULD,designed,,Stats are async; may need flush step
+PLT-011-b,PLTREQ-011,Download count increments on file download,api,patched,pytest,COULD,designed,,
+PLT-012-a,PLTREQ-012,Boolean AND query filters results correctly,api,patched,curl,COULD,designed,,OpenSearch query DSL
+PLT-012-b,PLTREQ-012,Range filter returns records within bounds,api,patched,curl,COULD,designed,,Numeric field range query
+PLT-013-a,PLTREQ-013,New version gets distinct DOI,api,patched,pytest,MUST,blocked,#plt-013-a,Requires DataCite sandbox; depends on PLT-002-a
+PLT-013-b,PLTREQ-013,Version history lists all versions,api,patched,pytest,MUST,designed,,
+PLT-014-a,PLTREQ-014,Binary file upload/download preserves bytes,api,patched,pytest,MUST,designed,,SHA-256 checksum comparison
+PLT-014-b,PLTREQ-014,Duplicate upload creates two physical copies,api,patched,pytest,MUST,designed,,Verifies no-deduplication behavior
+PLT-015-a,PLTREQ-015,Multi-GB file uploads via multipart,api,patched,manual,SHOULD,blocked,#plt-015-a,Size/bandwidth constraint blocks automation
+PLT-016-a,PLTREQ-016,Record added to community appears in community search,api,patched,pytest,MUST,designed,,
+PLT-016-b,PLTREQ-016,Non-member cannot modify community record,api,patched,pytest,MUST,designed,,
+PLT-017-a,PLTREQ-017,Co-editor can modify shared record,api,patched,pytest,MUST,designed,,
+PLT-018-a,PLTREQ-018,Draft record absent from public search,api,patched,pytest,MUST,designed,,
+PLT-018-b,PLTREQ-018,Pre-publish validator hook can block publication,api,patched,pytest,MUST,designed,,Platform mechanism only; obligation logic is DANREQ-014
+PLT-019-a,PLTREQ-019,PID link between published records established,api,patched,pytest,MUST,designed,,Depends on PLTREQ-021 patch
+PLT-019-b,PLTREQ-019,Linking to draft record is rejected,api,patched,pytest,MUST,designed,,Documents known upstream limitation
+PLT-020-a,PLTREQ-020,Parent publication propagates to child records,integration,patched,pytest,SHOULD,blocked,#plt-020-a,Not yet implemented; planned ~Nov 2026
+PLT-022-a,PLTREQ-022,Create draft from existing published record,api,patched,pytest,SHOULD,not-started,,Needs investigation before design; built-in vs. custom unclear
+PLT-023-a,PLTREQ-023,related_resource field accepts typed link,api,patched,pytest,MUST,designed,,
+PLT-023-b,PLTREQ-023,Typed relation from vocabs.ccmm.cz is valid,api,patched,pytest,MUST,designed,,
+PLT-024-a,PLTREQ-024,Vocabulary term with parent_id accepted and hierarchy stored,api,patched,pytest,SHOULD,designed,,Design-informing: confirms nested vocab structure is viable
+PLT-024-b,PLTREQ-024,Vocabulary endpoint returns hierarchy level fields,api,patched,curl,SHOULD,designed,,Design-informing: confirms depth/level fields present for tree traversal

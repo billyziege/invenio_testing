@@ -34,6 +34,14 @@ vocabulary-community-types:
       en: Community types
   - source: community-types.yaml
 
+vocabulary-hierarchical-vocab:
+  - writer: vocabulary
+    vocabulary: hierarchical-vocab
+    pid_type: v-hier
+    title:
+      en: Hierarchical Vocabulary
+  - source: hierarchical_vocab.yaml
+
 communities:
   - writer: service
     service: communities

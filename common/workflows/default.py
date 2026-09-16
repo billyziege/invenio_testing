@@ -145,7 +145,14 @@ class DefaultWorkflowPermissions(CommunityDefaultWorkflowPermissions):
     ] + CommunityDefaultWorkflowPermissions.can_delete
 
     can_manage_files = [
-        Disable(),
+        IfInState(
+            "draft",
+            then_=[
+                RecordOwners(),
+                PrimaryCommunityRole("curator"),
+                PrimaryCommunityRole("owner"),
+            ],
+        ),
     ]
 
 
