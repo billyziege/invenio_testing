@@ -1,0 +1,95 @@
+# Builds the testing app image from the pristine official NRP release, with
+# no patches applied. This image is used by PLT-021-a only.
+#
+# PLT-021-a interpretation:
+#   PASS  — NRP is self-sufficient; the patched image's oarepo-model fork can
+#           be retired on this NRP release.
+#   FAIL  — The upstream oarepo-model still has unresolved pid-relation bugs;
+#           use Dockerfile.patched for all other acceptance tests.
+#
+# If this image fails to BUILD (e.g. React MergeConflictError from webpack),
+# that itself is evidence that a build-time patch is also required. Record
+# the build error and use Dockerfile.patched for all tests until the upstream
+# issue is resolved.
+#
+# Re-run PLT-021-a on every new NRP upstream release to drive patch-set
+# minimization over time.
+
+ARG PYTHON_VERSION=3.14
+
+FROM python:${PYTHON_VERSION}-slim AS builder
+
+# Build deps: C-extension wheels (crypto, lxml, psycopg2) + Node/pnpm for webpack.
+# Python 3.14 is new enough that cp314 wheels may be absent from the CESNET
+# index for some packages, so compilers are included as a fallback.
+RUN apt-get update && apt-get install -y --no-install-recommends \
+        build-essential git curl ca-certificates pkg-config \
+        libpq-dev libxml2-dev libxslt1-dev libffi-dev libssl-dev \
+        rustc cargo libcairo2 \
+    && curl -fsSL https://deb.nodesource.com/setup_22.x | bash - \
+    && apt-get install -y --no-install-recommends nodejs \
+    && npm install -g pnpm@10.32.1 \
+    && rm -rf /var/lib/apt/lists/*
+
+RUN curl -LsSf https://astral.sh/uv/install.sh | sh
+ENV PATH="/root/.local/bin:${PATH}"
+
+ENV UV_EXTRA_INDEX_URL=https://gitlab.cesnet.cz/api/v4/projects/1408/packages/pypi/simple \
+    PIP_EXTRA_INDEX_URL=https://gitlab.cesnet.cz/api/v4/projects/1408/packages/pypi/simple \
+    UV_PRERELEASE=allow \
+    UV_PROJECT_ENVIRONMENT=/app/.venv \
+    UV_COMPILE_BYTECODE=1
+
+WORKDIR /app
+
+COPY . .
+
+# No oarepo-model override — resolve entirely from the official CESNET index.
+RUN uv sync --python="${PYTHON_VERSION}"
+
+ENV PATH="/app/.venv/bin:${PATH}"
+
+# run_invenio_cli install symlinks four paths into the instance path; replicate
+# those symlinks here so templates/translations/app_data/invenio.cfg are found
+# at runtime without the cli tool.
+RUN instance_path="$(invenio shell --no-term-title -c "print(app.instance_path, end='')")" \
+    && mkdir -p "${instance_path}" \
+    && ln -sf /app/invenio.cfg "${instance_path}/invenio.cfg" \
+    && ln -sf /app/templates "${instance_path}/templates" \
+    && ln -sf /app/translations "${instance_path}/translations" \
+    && ln -sf /app/app_data "${instance_path}/app_data"
+
+RUN invenio collect -v
+# buildall = create + install (pnpm install) + build
+RUN invenio webpack buildall
+
+# ---- Runtime stage ----
+FROM python:${PYTHON_VERSION}-slim AS runtime
+
+# libxml2 is required by uwsgi's shared-library deps; libcairo2 by cairosvg.
+RUN apt-get update && apt-get install -y --no-install-recommends \
+        libpq5 curl libcairo2 libxml2 \
+    && rm -rf /var/lib/apt/lists/*
+
+# python:*-slim has no LANG/LC_ALL; babel fails hard on POSIX/C locale.
+ENV LANG=C.UTF-8 \
+    LC_ALL=C.UTF-8
+
+WORKDIR /app
+
+# .venv/var/instance (built assets, compiled translations, invenio.cfg symlink)
+# lives inside .venv — copying the whole venv brings it all.
+COPY --from=builder /app/.venv /app/.venv
+COPY . .
+# uwsgi.ini hardcodes cert paths at /
+COPY docker/development.crt docker/development.key /
+
+ENV PATH="/app/.venv/bin:${PATH}" \
+    UV_PROJECT_ENVIRONMENT=/app/.venv
+
+EXPOSE 5000 8443
+
+ENTRYPOINT ["docker/entrypoint.sh"]
+# --lazy-apps: defers app import until after fork so each worker gets its own
+# fresh DB/search connections (avoids shared stale fd state across uwsgi workers).
+CMD ["uwsgi", "--ini", "docker/uwsgi.ini", "--lazy-apps"]
