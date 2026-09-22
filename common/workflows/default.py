@@ -41,7 +41,8 @@ from oarepo_communities.services.permissions.policy import (
     CommunityDefaultWorkflowPermissions,
 )
 from oarepo_requests.services.permissions.generators import IfRequestedBy
-from oarepo_runtime.services.permissions.generators import IfDraftType, RecordOwners
+from oarepo_runtime.services.generators import IfDraftType
+from invenio_rdm_records.services.generators import RecordOwners
 from oarepo_workflows import (
     AutoApprove,
     IfInState,
@@ -142,7 +143,7 @@ class DefaultWorkflowPermissions(CommunityDefaultWorkflowPermissions):
                 PrimaryCommunityRole("owner"),
             ],
         ),
-    ] + CommunityDefaultWorkflowPermissions.can_delete
+    ] + list(CommunityDefaultWorkflowPermissions.can_delete)
 
     can_manage_files = [
         IfInState(
@@ -290,28 +291,6 @@ class DefaultWorkflowRequests(WorkflowRequestPolicy):
         ],
     )
 
-    assign_doi = WorkflowRequest(
-        requesters=[
-            RecordOwners(),
-            PrimaryCommunityRole("curator"),
-            PrimaryCommunityRole("owner"),
-        ],
-        recipients=[
-            IfRequestedBy(
-                requesters=[
-                    PrimaryCommunityRole("curator"),
-                    PrimaryCommunityRole("owner"),
-                ],
-                then_=[AutoApprove()],
-                else_=[PrimaryCommunityRole("curator")],
-            )
-        ],
-        escalations=[
-            WorkflowRequestEscalation(
-                after=timedelta(days=21), recipients=[PrimaryCommunityRole("owner")]
-            )
-        ],
-    )
     initiate_community_migration = WorkflowRequest(
         requesters=[
             IfInState(

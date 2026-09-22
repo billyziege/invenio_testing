@@ -4,10 +4,13 @@
 #
 # Current patch set
 # -----------------
-# Patch 1 — oarepo-model fork (billyziege/oarepo-model)
-#   Fixes pid-relation bugs not yet resolved upstream. OAREPO_MODEL_FORK_REV
-#   pins the exact commit so builds are reproducible. Bump it when the fork
-#   is updated; it intentionally does NOT float a branch.
+# Patch 1 — oarepo-model fork (billyziege/oarepo-model, zerbe_patching_to_get_dantec_working)
+#   Installs the fork as an explicit direct dependency so that uv's
+#   [tool.uv.sources] override actually applies (overrides only work for
+#   direct deps, not transitive ones). The fork carries LazyPIDFieldProxy
+#   (add_pid_relation.py) + lazy _pid_field() (relations.py) that defer
+#   record_cls resolution to runtime, fixing the self-referential circular
+#   import that upstream oarepo-model 2.4.x does not handle.
 #
 # Patch minimization
 # ------------------
@@ -18,9 +21,6 @@
 ARG PYTHON_VERSION=3.14
 
 FROM python:${PYTHON_VERSION}-slim AS builder
-
-ARG OAREPO_MODEL_FORK_URL=https://github.com/billyziege/oarepo-model
-ARG OAREPO_MODEL_FORK_REV=e7ef45413fd941a3b53f8f638b10a6acb1059339
 
 # Build deps: C-extension wheels + Node/pnpm for webpack.
 RUN apt-get update && apt-get install -y --no-install-recommends \
@@ -45,11 +45,10 @@ WORKDIR /app
 
 COPY . .
 
-# Override the transitively-resolved oarepo-model with the fork that fixes
-# pid-relation bugs. uv add rewrites pyproject.toml, re-resolves uv.lock,
-# and installs the package in one step; uv sync ensures all other deps are
-# consistent with the updated lock.
-RUN uv add "oarepo-model @ git+${OAREPO_MODEL_FORK_URL}@${OAREPO_MODEL_FORK_REV}" \
+# Activate fork overrides: swap in the patched pyproject before resolving.
+# pyproject.patched.toml adds oarepo-model as a direct dep + [tool.uv.sources]
+# pointing to the billyziege fork so uv installs the LazyPIDFieldProxy fix.
+RUN cp pyproject.patched.toml pyproject.toml \
     && uv sync --python="${PYTHON_VERSION}"
 
 ENV PATH="/app/.venv/bin:${PATH}"
