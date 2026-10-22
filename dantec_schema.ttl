@@ -1,0 +1,604 @@
+@prefix ccmm: <https://model.ccmm.cz/vocabulary/ccmm#> .
+@prefix dantec: <https://vocab.dantec.cz/> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix prov: <http://www.w3.org/ns/prov#> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+<https://vocab.dantec.cz/shapes/DOIActivityShape> a sh:NodeShape ;
+    skos:prefLabel "Activity"@en ;
+    sh:property <https://vocab.dantec.cz/pshapes/DOIActivityAccessRights>,
+        <https://vocab.dantec.cz/pshapes/DOIActivityAttributes>,
+        <https://vocab.dantec.cz/pshapes/DOIActivityDescription>,
+        <https://vocab.dantec.cz/pshapes/DOIActivityEmbargoDate>,
+        <https://vocab.dantec.cz/pshapes/DOIActivityEndDate>,
+        <https://vocab.dantec.cz/pshapes/DOIActivityLicense>,
+        <https://vocab.dantec.cz/pshapes/DOIActivityProvenanceStatement>,
+        <https://vocab.dantec.cz/pshapes/DOIActivityRelatedItems>,
+        <https://vocab.dantec.cz/pshapes/DOIActivityStartDate>,
+        <https://vocab.dantec.cz/pshapes/DOIActivitySteps>,
+        <https://vocab.dantec.cz/pshapes/DOIActivitySubjects>,
+        <https://vocab.dantec.cz/pshapes/DOIActivityTitle>,
+        <https://vocab.dantec.cz/pshapes/DOIActivityType> ;
+    sh:targetClass <https://vocab.dantec.cz/class/DOIActivity> .
+
+<https://vocab.dantec.cz/pshapes/DOIActivityAccessRights> a sh:PropertyShape ;
+    skos:exactMatch dcterms:accessRights ;
+    sh:class skos:Concept ;
+    sh:maxCount 1 ;
+    sh:minCount 1 ;
+    sh:name "Access rights"@en ;
+    sh:path <https://vocab.dantec.cz/prop/DOIActivityAccessRights> ;
+    dantec:ccmmExport "CMMDataSet.terms_of_use.access_rights (vocab: accessrights)"@en ;
+    dantec:facetable true ;
+    dantec:obligation "required"@en ;
+    dantec:searchable false .
+
+<https://vocab.dantec.cz/pshapes/DOIActivityAttributes> a sh:PropertyShape ;
+    sh:minCount 0 ;
+    sh:name "Activity attributes"@en ;
+    sh:node <https://vocab.dantec.cz/shapes/DOIActivityAttributesShape> ;
+    sh:path <https://vocab.dantec.cz/prop/DOIActivityAttributes> ;
+    dantec:facetable false ;
+    dantec:obligation "[0,6 ]"@en ;
+    dantec:searchable true .
+
+<https://vocab.dantec.cz/pshapes/DOIActivityAttributesName> a sh:PropertyShape ;
+    sh:maxCount 1 ;
+    sh:minCount 1 ;
+    sh:name "Attribute name"@en ;
+    sh:path <https://vocab.dantec.cz/prop/DOIActivityAttributesName> ;
+    dantec:facetable true ;
+    dantec:obligation "optional"@en ;
+    dantec:searchable true .
+
+<https://vocab.dantec.cz/pshapes/DOIActivityAttributesRole> a sh:PropertyShape ;
+    sh:maxCount 1 ;
+    sh:minCount 1 ;
+    sh:name "Attribute role"@en ;
+    sh:path <https://vocab.dantec.cz/prop/DOIActivityAttributesRole> ;
+    dantec:facetable true ;
+    dantec:obligation "optional"@en ;
+    dantec:searchable true .
+
+<https://vocab.dantec.cz/pshapes/DOIActivityAttributesValue> a sh:PropertyShape ;
+    sh:maxCount 1 ;
+    sh:minCount 1 ;
+    sh:name "Value"@en ;
+    sh:node <https://vocab.dantec.cz/shapes/DOIActivityAttributesValueShape> ;
+    sh:path <https://vocab.dantec.cz/prop/DOIActivityAttributesValue> ;
+    dantec:obligation "optional"@en .
+
+<https://vocab.dantec.cz/pshapes/DOIActivityAttributesValueNumeric> a sh:PropertyShape ;
+    sh:maxCount 1 ;
+    sh:minCount 1 ;
+    sh:name "Value"@en ;
+    sh:node <https://vocab.dantec.cz/shapes/DOIActivityAttributesValueNumericShape> ;
+    sh:path <https://vocab.dantec.cz/prop/DOIActivityAttributesValueNumeric> ;
+    dantec:facetable false ;
+    dantec:obligation "optional"@en ;
+    dantec:searchable false .
+
+<https://vocab.dantec.cz/pshapes/DOIActivityAttributesValueNumericReportedValue> a sh:PropertyShape ;
+    sh:datatype xsd:decimal ;
+    sh:maxCount 1 ;
+    sh:minCount 1 ;
+    sh:name "Reported value"@en ;
+    sh:path <https://vocab.dantec.cz/prop/DOIActivityAttributesValueNumericReportedValue> ;
+    dantec:facetable false ;
+    dantec:obligation "required"@en ;
+    dantec:searchable false .
+
+<https://vocab.dantec.cz/pshapes/DOIActivityAttributesValueNumericUnitIRI> a sh:PropertyShape ;
+    sh:datatype xsd:string ;
+    sh:maxCount 1 ;
+    sh:minCount 1 ;
+    sh:name "Unit IRI"@en ;
+    sh:path <https://vocab.dantec.cz/prop/DOIActivityAttributesValueNumericUnitIRI> ;
+    dantec:facetable false ;
+    dantec:obligation "required"@en ;
+    dantec:searchable false .
+
+<https://vocab.dantec.cz/pshapes/DOIActivityAttributesValueNumericUnitStdIRI> a sh:PropertyShape ;
+    sh:datatype xsd:string ;
+    sh:maxCount 1 ;
+    sh:minCount 1 ;
+    sh:name "Standardized unit IRI"@en ;
+    sh:path <https://vocab.dantec.cz/prop/DOIActivityAttributesValueNumericUnitStdIRI> ;
+    dantec:facetable false ;
+    dantec:obligation "required"@en ;
+    dantec:searchable false .
+
+<https://vocab.dantec.cz/pshapes/DOIActivityAttributesValueNumericUnitStdSymbol> a sh:PropertyShape ;
+    sh:datatype xsd:string ;
+    sh:maxCount 1 ;
+    sh:minCount 1 ;
+    sh:name "Standardized unit"@en ;
+    sh:path <https://vocab.dantec.cz/prop/DOIActivityAttributesValueNumericUnitStdSymbol> ;
+    dantec:facetable false ;
+    dantec:obligation "optional"@en ;
+    dantec:searchable false .
+
+<https://vocab.dantec.cz/pshapes/DOIActivityAttributesValueNumericUnitSymbol> a sh:PropertyShape ;
+    sh:datatype xsd:string ;
+    sh:maxCount 1 ;
+    sh:minCount 1 ;
+    sh:name "Reported unit"@en ;
+    sh:path <https://vocab.dantec.cz/prop/DOIActivityAttributesValueNumericUnitSymbol> ;
+    dantec:facetable false ;
+    dantec:obligation "optional"@en ;
+    dantec:searchable false .
+
+<https://vocab.dantec.cz/pshapes/DOIActivityAttributesValueNumericValueStd> a sh:PropertyShape ;
+    sh:datatype xsd:decimal ;
+    sh:maxCount 1 ;
+    sh:minCount 1 ;
+    sh:name "Standardized value"@en ;
+    sh:path <https://vocab.dantec.cz/prop/DOIActivityAttributesValueNumericValueStd> ;
+    dantec:facetable false ;
+    dantec:obligation "required"@en ;
+    dantec:searchable true .
+
+<https://vocab.dantec.cz/pshapes/DOIActivityAttributesValueText> a sh:PropertyShape ;
+    sh:maxCount 1 ;
+    sh:minCount 1 ;
+    sh:name "Value"@en ;
+    sh:node <https://vocab.dantec.cz/shapes/DOIActivityAttributesValueTextShape> ;
+    sh:path <https://vocab.dantec.cz/prop/DOIActivityAttributesValueText> ;
+    dantec:facetable false ;
+    dantec:obligation "optional"@en ;
+    dantec:searchable false .
+
+<https://vocab.dantec.cz/pshapes/DOIActivityAttributesValueTextValue> a sh:PropertyShape ;
+    sh:datatype xsd:string ;
+    sh:maxCount 1 ;
+    sh:minCount 1 ;
+    sh:name "Value"@en ;
+    sh:path <https://vocab.dantec.cz/prop/DOIActivityAttributesValueTextValue> ;
+    dantec:facetable false ;
+    dantec:obligation "optional"@en ;
+    dantec:searchable true .
+
+<https://vocab.dantec.cz/pshapes/DOIActivityAttributesValueType> a sh:PropertyShape ;
+    sh:maxCount 1 ;
+    sh:minCount 1 ;
+    sh:name "Value type"@en ;
+    sh:path <https://vocab.dantec.cz/prop/DOIActivityAttributesValueType> ;
+    dantec:facetable false ;
+    dantec:obligation "required"@en ;
+    dantec:searchable true .
+
+<https://vocab.dantec.cz/pshapes/DOIActivityAttributesVocabItem> a sh:PropertyShape ;
+    sh:class skos:Concept ;
+    sh:maxCount 1 ;
+    sh:minCount 1 ;
+    sh:name "Attribute name"@en ;
+    sh:path <https://vocab.dantec.cz/prop/DOIActivityAttributesVocabItem> ;
+    dantec:facetable false ;
+    dantec:obligation "optional"@en ;
+    dantec:searchable false .
+
+<https://vocab.dantec.cz/pshapes/DOIActivityDescription> a sh:PropertyShape ;
+    skos:exactMatch <https://w3id.org/tib/datacite/property/description> ;
+    sh:datatype xsd:string ;
+    sh:description "Already in CCCM"@en ;
+    sh:maxCount 1 ;
+    sh:minCount 1 ;
+    sh:name "Description"@en ;
+    sh:path <https://vocab.dantec.cz/prop/DOIActivityDescription> ;
+    dantec:ccmmExport "CCMMDataSet.descriptions[description_type=abstract].description_text"@en ;
+    dantec:facetable false ;
+    dantec:obligation "optional"@en ;
+    dantec:searchable false .
+
+<https://vocab.dantec.cz/pshapes/DOIActivityEmbargoDate> a sh:PropertyShape ;
+    skos:exactMatch ccmm:hasTimeReference ;
+    sh:datatype xsd:date ;
+    sh:maxCount 1 ;
+    sh:minCount 1 ;
+    sh:name "Embargo end date"@en ;
+    sh:path <https://vocab.dantec.cz/prop/DOIActivityEmbargoDate> ;
+    dantec:ccmmExport "CCMMDataSet.time_references[date_type=Available].temporal_representation.time_instant.date"@en ;
+    dantec:facetable false ;
+    dantec:obligation "optional"@en ;
+    dantec:searchable false .
+
+<https://vocab.dantec.cz/pshapes/DOIActivityEndDate> a sh:PropertyShape ;
+    skos:exactMatch ccmm:hasTimeReference ;
+    sh:datatype xsd:date ;
+    sh:description "control in CCCM"@en ;
+    sh:maxCount 1 ;
+    sh:minCount 1 ;
+    sh:name "End date"@en ;
+    sh:path <https://vocab.dantec.cz/prop/DOIActivityEndDate> ;
+    dantec:ccmmExport "CCMMDataSet.time_references[date_type=CollectedEnd].temporal_representation.time_instant.date"@en ;
+    dantec:facetable true ;
+    dantec:obligation "optional"@en ;
+    dantec:searchable true .
+
+<https://vocab.dantec.cz/pshapes/DOIActivityLicense> a sh:PropertyShape ;
+    skos:exactMatch dcterms:license ;
+    sh:class skos:Concept ;
+    sh:maxCount 1 ;
+    sh:minCount 1 ;
+    sh:name "Licence"@en ;
+    sh:path <https://vocab.dantec.cz/prop/DOIActivityLicense> ;
+    dantec:ccmmExport "CCMMDataSet.terms_of_use.license.iri"@en ;
+    dantec:facetable true ;
+    dantec:obligation "required"@en ;
+    dantec:searchable true .
+
+<https://vocab.dantec.cz/pshapes/DOIActivityProvenanceStatement> a sh:PropertyShape ;
+    skos:exactMatch prov:wasGeneratedBy ;
+    sh:datatype xsd:string ;
+    sh:maxCount 1 ;
+    sh:minCount 1 ;
+    sh:name "Provenance Statement"@en ;
+    sh:path <https://vocab.dantec.cz/prop/DOIActivityProvenanceStatement> ;
+    dantec:ccmmExport "CCMMDataSet.provenances[].label"@en ;
+    dantec:facetable false ;
+    dantec:obligation "optionnal"@en ;
+    dantec:searchable true .
+
+<https://vocab.dantec.cz/pshapes/DOIActivityRelatedItems> a sh:PropertyShape ;
+    skos:exactMatch dcterms:relation ;
+    sh:minCount 0 ;
+    sh:name "Related items"@en ;
+    sh:node <https://vocab.dantec.cz/shapes/DOIActivityRelatedItemsShape> ;
+    sh:path <https://vocab.dantec.cz/prop/DOIActivityRelatedItems> ;
+    dantec:ccmmExport "CCMMDataSet.related_resources[].resource_url / .identifiers"@en ;
+    dantec:obligation "[0, ]"@en .
+
+<https://vocab.dantec.cz/pshapes/DOIActivityStartDate> a sh:PropertyShape ;
+    skos:exactMatch ccmm:hasTimeReference ;
+    sh:datatype xsd:date ;
+    sh:description "control in CCCM"@en ;
+    sh:maxCount 1 ;
+    sh:minCount 1 ;
+    sh:name "Start date"@en ;
+    sh:path <https://vocab.dantec.cz/prop/DOIActivityStartDate> ;
+    dantec:ccmmExport "CCMMDataSet.time_references[date_type=CollectedStart].temporal_representation.time_instant.date"@en ;
+    dantec:facetable true ;
+    dantec:obligation "optional"@en ;
+    dantec:searchable true .
+
+<https://vocab.dantec.cz/pshapes/DOIActivitySteps> a sh:PropertyShape ;
+    sh:minCount 0 ;
+    sh:name "Steps"@en ;
+    sh:node <https://vocab.dantec.cz/shapes/DOIActivityStepsShape> ;
+    sh:path <https://vocab.dantec.cz/prop/DOIActivitySteps> .
+
+<https://vocab.dantec.cz/pshapes/DOIActivityStepsMethod> a sh:PropertyShape ;
+    sh:maxCount 1 ;
+    sh:minCount 1 ;
+    sh:name "Methods"@en ;
+    sh:node <https://vocab.dantec.cz/shapes/DOIActivityStepsMethodShape> ;
+    sh:path <https://vocab.dantec.cz/prop/DOIActivityStepsMethod> ;
+    dantec:obligation "required"@en .
+
+<https://vocab.dantec.cz/pshapes/DOIActivityStepsMethodDescription> a sh:PropertyShape ;
+    sh:datatype xsd:string ;
+    sh:maxCount 1 ;
+    sh:minCount 1 ;
+    sh:name "Method.Description"@en ;
+    sh:path <https://vocab.dantec.cz/prop/DOIActivityStepsMethodDescription> ;
+    dantec:facetable false ;
+    dantec:obligation "optional"@en ;
+    dantec:searchable false .
+
+<https://vocab.dantec.cz/pshapes/DOIActivityStepsMethodIdentifier> a sh:PropertyShape ;
+    sh:datatype xsd:string ;
+    sh:maxCount 1 ;
+    sh:minCount 1 ;
+    sh:name "Method.Identifier"@en ;
+    sh:path <https://vocab.dantec.cz/prop/DOIActivityStepsMethodIdentifier> ;
+    dantec:facetable false ;
+    dantec:obligation "optional"@en ;
+    dantec:searchable true .
+
+<https://vocab.dantec.cz/pshapes/DOIActivityStepsMethodType> a sh:PropertyShape ;
+    sh:class skos:Concept ;
+    sh:maxCount 1 ;
+    sh:minCount 1 ;
+    sh:name "Method.Type"@en ;
+    sh:path <https://vocab.dantec.cz/prop/DOIActivityStepsMethodType> ;
+    dantec:facetable true ;
+    dantec:obligation "required"@en ;
+    dantec:searchable true .
+
+<https://vocab.dantec.cz/pshapes/DOIActivityStepsPreviousSteps> a sh:PropertyShape ;
+    sh:datatype xsd:string ;
+    sh:minCount 0 ;
+    sh:name "Previous steps"@en ;
+    sh:path <https://vocab.dantec.cz/prop/DOIActivityStepsPreviousSteps> ;
+    dantec:facetable false ;
+    dantec:obligation "[0,]"@en ;
+    dantec:searchable false .
+
+<https://vocab.dantec.cz/pshapes/DOIActivityStepsSamples> a sh:PropertyShape ;
+    sh:minCount 0 ;
+    sh:name "Samples"@en ;
+    sh:node <https://vocab.dantec.cz/shapes/DOIActivityStepsSamplesShape> ;
+    sh:path <https://vocab.dantec.cz/prop/DOIActivityStepsSamples> ;
+    dantec:obligation "[1,]"@en .
+
+<https://vocab.dantec.cz/pshapes/DOIActivityStepsSamplesForm> a sh:PropertyShape ;
+    sh:class skos:Concept ;
+    sh:maxCount 1 ;
+    sh:minCount 1 ;
+    sh:name "Sample form"@en ;
+    sh:path <https://vocab.dantec.cz/prop/DOIActivityStepsSamplesForm> ;
+    dantec:facetable true ;
+    dantec:obligation "optional"@en ;
+    dantec:searchable true .
+
+<https://vocab.dantec.cz/pshapes/DOIActivityStepsSamplesMaterials> a sh:PropertyShape ;
+    sh:minCount 0 ;
+    sh:name "Materials"@en ;
+    sh:node <https://vocab.dantec.cz/shapes/DOIActivityStepsSamplesMaterialsShape> ;
+    sh:path <https://vocab.dantec.cz/prop/DOIActivityStepsSamplesMaterials> ;
+    dantec:obligation "[1, ]"@en .
+
+<https://vocab.dantec.cz/pshapes/DOIActivityStepsSamplesMaterialsElements> a sh:PropertyShape ;
+    sh:class skos:Concept ;
+    sh:minCount 0 ;
+    sh:name "Elements"@en ;
+    sh:path <https://vocab.dantec.cz/prop/DOIActivityStepsSamplesMaterialsElements> ;
+    dantec:facetable true ;
+    dantec:obligation "[0, ]"@en ;
+    dantec:searchable true .
+
+<https://vocab.dantec.cz/pshapes/DOIActivityStepsSamplesMaterialsFormulas> a sh:PropertyShape ;
+    sh:minCount 0 ;
+    sh:name "Formulas"@en ;
+    sh:node <https://vocab.dantec.cz/shapes/DOIActivityStepsSamplesMaterialsFormulasShape> ;
+    sh:path <https://vocab.dantec.cz/prop/DOIActivityStepsSamplesMaterialsFormulas> ;
+    dantec:facetable true ;
+    dantec:searchable true .
+
+<https://vocab.dantec.cz/pshapes/DOIActivityStepsSamplesMaterialsFormulasDescription> a sh:PropertyShape ;
+    sh:datatype xsd:string ;
+    sh:maxCount 1 ;
+    sh:minCount 1 ;
+    sh:name "Reduced Chemical Formula Description"@en ;
+    sh:path <https://vocab.dantec.cz/prop/DOIActivityStepsSamplesMaterialsFormulasDescription> ;
+    dantec:facetable false ;
+    dantec:obligation "optional"@en ;
+    dantec:searchable true .
+
+<https://vocab.dantec.cz/pshapes/DOIActivityStepsSamplesMaterialsLink> a sh:PropertyShape ;
+    sh:maxCount 1 ;
+    sh:minCount 1 ;
+    sh:name "Material link"@en ;
+    sh:node <https://vocab.dantec.cz/shapes/DOIActivityStepsSamplesMaterialsLinkShape> ;
+    sh:path <https://vocab.dantec.cz/prop/DOIActivityStepsSamplesMaterialsLink> ;
+    dantec:facetable false ;
+    dantec:obligation "optional"@en ;
+    dantec:searchable true .
+
+<https://vocab.dantec.cz/pshapes/DOIActivityStepsSamplesMaterialsLinkIdentifier> a sh:PropertyShape ;
+    sh:datatype xsd:string ;
+    sh:maxCount 1 ;
+    sh:minCount 1 ;
+    sh:name "Sample external id"@en ;
+    sh:path <https://vocab.dantec.cz/prop/DOIActivityStepsSamplesMaterialsLinkIdentifier> ;
+    dantec:facetable false ;
+    dantec:obligation "required"@en ;
+    dantec:searchable true .
+
+<https://vocab.dantec.cz/pshapes/DOIActivityStepsSamplesMaterialsLinkRetrievedOn> a sh:PropertyShape ;
+    sh:datatype xsd:dateTime ;
+    sh:maxCount 1 ;
+    sh:minCount 1 ;
+    sh:name "Sample retrieval date"@en ;
+    sh:path <https://vocab.dantec.cz/prop/DOIActivityStepsSamplesMaterialsLinkRetrievedOn> ;
+    dantec:facetable false ;
+    dantec:obligation "optional"@en ;
+    dantec:searchable true .
+
+<https://vocab.dantec.cz/pshapes/DOIActivityStepsSamplesMaterialsLinkSource> a sh:PropertyShape ;
+    sh:class skos:Concept ;
+    sh:maxCount 1 ;
+    sh:minCount 1 ;
+    sh:name "Material source"@en ;
+    sh:path <https://vocab.dantec.cz/prop/DOIActivityStepsSamplesMaterialsLinkSource> ;
+    dantec:facetable false ;
+    dantec:obligation "required"@en ;
+    dantec:searchable true .
+
+<https://vocab.dantec.cz/pshapes/DOIActivityStepsSamplesMaterialsName> a sh:PropertyShape ;
+    sh:datatype xsd:string ;
+    sh:maxCount 1 ;
+    sh:minCount 1 ;
+    sh:name "Material name"@en ;
+    sh:path <https://vocab.dantec.cz/prop/DOIActivityStepsSamplesMaterialsName> ;
+    dantec:facetable false ;
+    dantec:obligation "required"@en ;
+    dantec:searchable true .
+
+<https://vocab.dantec.cz/pshapes/DOIActivityStepsSamplesMaterialsNelements> a sh:PropertyShape ;
+    sh:datatype xsd:integer ;
+    sh:maxCount 1 ;
+    sh:minCount 1 ;
+    sh:name "Material number of elements"@en ;
+    sh:path <https://vocab.dantec.cz/prop/DOIActivityStepsSamplesMaterialsNelements> ;
+    dantec:facetable true ;
+    dantec:searchable false .
+
+<https://vocab.dantec.cz/pshapes/DOIActivityStepsSamplesNMaterial> a sh:PropertyShape ;
+    sh:datatype xsd:integer ;
+    sh:maxCount 1 ;
+    sh:minCount 1 ;
+    sh:name "Sample number of materials"@en ;
+    sh:path <https://vocab.dantec.cz/prop/DOIActivityStepsSamplesNMaterial> ;
+    dantec:facetable true ;
+    dantec:obligation "required"@en ;
+    dantec:searchable true .
+
+<https://vocab.dantec.cz/pshapes/DOIActivityStepsSamplesName> a sh:PropertyShape ;
+    sh:datatype xsd:string ;
+    sh:maxCount 1 ;
+    sh:minCount 1 ;
+    sh:name "Sample name"@en ;
+    sh:path <https://vocab.dantec.cz/prop/DOIActivityStepsSamplesName> ;
+    dantec:facetable false ;
+    dantec:obligation "required"@en ;
+    dantec:searchable true .
+
+<https://vocab.dantec.cz/pshapes/DOIActivityStepsSamplesRole> a sh:PropertyShape ;
+    sh:class skos:Concept ;
+    sh:maxCount 1 ;
+    sh:minCount 1 ;
+    sh:name "Sample role"@en ;
+    sh:path <https://vocab.dantec.cz/prop/DOIActivityStepsSamplesRole> ;
+    dantec:facetable true ;
+    dantec:obligation "optional"@en ;
+    dantec:searchable false .
+
+<https://vocab.dantec.cz/pshapes/DOIActivityStepsTools> a sh:PropertyShape ;
+    sh:minCount 0 ;
+    sh:name "Tools"@en ;
+    sh:node <https://vocab.dantec.cz/shapes/DOIActivityStepsToolsShape> ;
+    sh:path <https://vocab.dantec.cz/prop/DOIActivityStepsTools> ;
+    dantec:obligation "optional"@en .
+
+<https://vocab.dantec.cz/pshapes/DOIActivityStepsToolsDescription> a sh:PropertyShape ;
+    sh:datatype xsd:string ;
+    sh:maxCount 1 ;
+    sh:minCount 1 ;
+    sh:name "Tool description"@en ;
+    sh:path <https://vocab.dantec.cz/prop/DOIActivityStepsToolsDescription> ;
+    dantec:facetable false ;
+    dantec:obligation "optional"@en ;
+    dantec:searchable false .
+
+<https://vocab.dantec.cz/pshapes/DOIActivityStepsToolsIdentifier> a sh:PropertyShape ;
+    sh:datatype xsd:string ;
+    sh:maxCount 1 ;
+    sh:minCount 1 ;
+    sh:name "Tool.Identifier"@en ;
+    sh:path <https://vocab.dantec.cz/prop/DOIActivityStepsToolsIdentifier> ;
+    dantec:facetable false ;
+    dantec:obligation "optional"@en ;
+    dantec:searchable true .
+
+<https://vocab.dantec.cz/pshapes/DOIActivityStepsToolsType> a sh:PropertyShape ;
+    sh:class skos:Concept ;
+    sh:maxCount 1 ;
+    sh:minCount 1 ;
+    sh:name "Tool.Type"@en ;
+    sh:path <https://vocab.dantec.cz/prop/DOIActivityStepsToolsType> ;
+    dantec:facetable false ;
+    dantec:obligation "optional"@en ;
+    dantec:searchable true .
+
+<https://vocab.dantec.cz/pshapes/DOIActivitySubjects> a sh:PropertyShape ;
+    skos:exactMatch <https://w3id.org/tib/datacite/property/subject> ;
+    sh:minCount 0 ;
+    sh:name "Subjects"@en ;
+    sh:path <https://vocab.dantec.cz/prop/DOIActivitySubjects> ;
+    dantec:ccmmExport "CCMMDataSet.subjects"@en ;
+    dantec:facetable true ;
+    dantec:obligation "required"@en ;
+    dantec:searchable true .
+
+<https://vocab.dantec.cz/pshapes/DOIActivityTitle> a sh:PropertyShape ;
+    skos:exactMatch dcterms:title ;
+    sh:datatype xsd:string ;
+    sh:description "Already in CCCM"@en ;
+    sh:maxCount 1 ;
+    sh:minCount 1 ;
+    sh:name "Title"@en ;
+    sh:path <https://vocab.dantec.cz/prop/DOIActivityTitle> ;
+    dantec:ccmmExport "CCMMDataSet.title"@en ;
+    dantec:facetable false ;
+    dantec:obligation "required"@en ;
+    dantec:searchable true .
+
+<https://vocab.dantec.cz/pshapes/DOIActivityType> a sh:PropertyShape ;
+    sh:class skos:Concept ;
+    sh:maxCount 1 ;
+    sh:minCount 1 ;
+    sh:name "Activity type"@en ;
+    sh:path <https://vocab.dantec.cz/prop/DOIActivityType> ;
+    dantec:facetable true ;
+    dantec:obligation "required"@en ;
+    dantec:searchable false .
+
+<https://vocab.dantec.cz/shapes/DOIActivityAttributesShape> a sh:NodeShape ;
+    skos:prefLabel "Activity attributes"@en ;
+    sh:property <https://vocab.dantec.cz/pshapes/DOIActivityAttributesName>,
+        <https://vocab.dantec.cz/pshapes/DOIActivityAttributesRole>,
+        <https://vocab.dantec.cz/pshapes/DOIActivityAttributesValue>,
+        <https://vocab.dantec.cz/pshapes/DOIActivityAttributesVocabItem> .
+
+<https://vocab.dantec.cz/shapes/DOIActivityAttributesValueNumericShape> a sh:NodeShape ;
+    skos:prefLabel "Value"@en ;
+    sh:property <https://vocab.dantec.cz/pshapes/DOIActivityAttributesValueNumericReportedValue>,
+        <https://vocab.dantec.cz/pshapes/DOIActivityAttributesValueNumericUnitIRI>,
+        <https://vocab.dantec.cz/pshapes/DOIActivityAttributesValueNumericUnitStdIRI>,
+        <https://vocab.dantec.cz/pshapes/DOIActivityAttributesValueNumericUnitStdSymbol>,
+        <https://vocab.dantec.cz/pshapes/DOIActivityAttributesValueNumericUnitSymbol>,
+        <https://vocab.dantec.cz/pshapes/DOIActivityAttributesValueNumericValueStd> .
+
+<https://vocab.dantec.cz/shapes/DOIActivityAttributesValueShape> a sh:NodeShape ;
+    skos:prefLabel "Value"@en ;
+    sh:property <https://vocab.dantec.cz/pshapes/DOIActivityAttributesValueNumeric>,
+        <https://vocab.dantec.cz/pshapes/DOIActivityAttributesValueText>,
+        <https://vocab.dantec.cz/pshapes/DOIActivityAttributesValueType> .
+
+<https://vocab.dantec.cz/shapes/DOIActivityAttributesValueTextShape> a sh:NodeShape ;
+    skos:prefLabel "Value"@en ;
+    sh:property <https://vocab.dantec.cz/pshapes/DOIActivityAttributesValueTextValue> .
+
+<https://vocab.dantec.cz/shapes/DOIActivityRelatedItemsShape> a sh:NodeShape ;
+    skos:exactMatch dcterms:relation ;
+    skos:prefLabel "Related items"@en ;
+    dantec:ccmmExport "CCMMDataSet.related_resources[].resource_url / .identifiers"@en .
+
+<https://vocab.dantec.cz/shapes/DOIActivityStepsMethodShape> a sh:NodeShape ;
+    skos:prefLabel "Methods"@en ;
+    sh:property <https://vocab.dantec.cz/pshapes/DOIActivityStepsMethodDescription>,
+        <https://vocab.dantec.cz/pshapes/DOIActivityStepsMethodIdentifier>,
+        <https://vocab.dantec.cz/pshapes/DOIActivityStepsMethodType> .
+
+<https://vocab.dantec.cz/shapes/DOIActivityStepsSamplesMaterialsFormulasShape> a sh:NodeShape ;
+    skos:prefLabel "Formulas"@en ;
+    sh:property <https://vocab.dantec.cz/pshapes/DOIActivityStepsSamplesMaterialsFormulasDescription> .
+
+<https://vocab.dantec.cz/shapes/DOIActivityStepsSamplesMaterialsLinkShape> a sh:NodeShape ;
+    skos:prefLabel "Material link"@en ;
+    sh:property <https://vocab.dantec.cz/pshapes/DOIActivityStepsSamplesMaterialsLinkIdentifier>,
+        <https://vocab.dantec.cz/pshapes/DOIActivityStepsSamplesMaterialsLinkRetrievedOn>,
+        <https://vocab.dantec.cz/pshapes/DOIActivityStepsSamplesMaterialsLinkSource> .
+
+<https://vocab.dantec.cz/shapes/DOIActivityStepsSamplesMaterialsShape> a sh:NodeShape ;
+    skos:prefLabel "Materials"@en ;
+    sh:property <https://vocab.dantec.cz/pshapes/DOIActivityStepsSamplesMaterialsElements>,
+        <https://vocab.dantec.cz/pshapes/DOIActivityStepsSamplesMaterialsFormulas>,
+        <https://vocab.dantec.cz/pshapes/DOIActivityStepsSamplesMaterialsLink>,
+        <https://vocab.dantec.cz/pshapes/DOIActivityStepsSamplesMaterialsName>,
+        <https://vocab.dantec.cz/pshapes/DOIActivityStepsSamplesMaterialsNelements> .
+
+<https://vocab.dantec.cz/shapes/DOIActivityStepsSamplesShape> a sh:NodeShape ;
+    skos:prefLabel "Samples"@en ;
+    sh:property <https://vocab.dantec.cz/pshapes/DOIActivityStepsSamplesForm>,
+        <https://vocab.dantec.cz/pshapes/DOIActivityStepsSamplesMaterials>,
+        <https://vocab.dantec.cz/pshapes/DOIActivityStepsSamplesNMaterial>,
+        <https://vocab.dantec.cz/pshapes/DOIActivityStepsSamplesName>,
+        <https://vocab.dantec.cz/pshapes/DOIActivityStepsSamplesRole> .
+
+<https://vocab.dantec.cz/shapes/DOIActivityStepsShape> a sh:NodeShape ;
+    skos:prefLabel "Steps"@en ;
+    sh:property <https://vocab.dantec.cz/pshapes/DOIActivityStepsMethod>,
+        <https://vocab.dantec.cz/pshapes/DOIActivityStepsPreviousSteps>,
+        <https://vocab.dantec.cz/pshapes/DOIActivityStepsSamples>,
+        <https://vocab.dantec.cz/pshapes/DOIActivityStepsTools> .
+
+<https://vocab.dantec.cz/shapes/DOIActivityStepsToolsShape> a sh:NodeShape ;
+    skos:prefLabel "Tools"@en ;
+    sh:property <https://vocab.dantec.cz/pshapes/DOIActivityStepsToolsDescription>,
+        <https://vocab.dantec.cz/pshapes/DOIActivityStepsToolsIdentifier>,
+        <https://vocab.dantec.cz/pshapes/DOIActivityStepsToolsType> .
+
